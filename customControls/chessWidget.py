@@ -30,7 +30,7 @@ class ChessWidget(QMainWindow):
                 """)
 
         self.setWindowFlags(Qt.WindowCloseButtonHint)
-        self.resize(880, 600)
+        self.resize(680, 620)
         self.setFixedSize(self.width(), self.height())
         if os.path.exists('resource'):
             icon = QIcon('resource/ico/title.ico')

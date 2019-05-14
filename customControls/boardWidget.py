@@ -3,25 +3,27 @@ from PySide2.QtCore import Qt
 from PySide2.QtGui import QPaintEvent, QPainter, QPen
 
 
+# noinspection PyArgumentList,PyUnboundLocalVariable
 class BoardWidget(QWidget):
     def __init__(self, *args, **kwargs):
         super(BoardWidget, self).__init__(*args, **kwargs)
         # self.resize(361, 321)
-        self.resize(440, 400)
         # 小正方形的边长
-        self.length = 40
+        self.length = 60
+        self.resize(self.length * 11, self.length * 10)
         self.lengths = dict([(i, i * self.length) for i in range(1, 11)])
 
     def paintEvent(self, event: QPaintEvent):
         painter = QPainter()
         painter.begin(self)
+        painter.setRenderHints(QPainter.SmoothPixmapTransform)
         pen = QPen(Qt.black, 1, Qt.SolidLine)
-        pen1 = QPen(Qt.black, 2, Qt.SolidLine)
-        painter.setPen(pen1)
-        painter.drawLine(0, 0, self.size().width(), 0)
-        painter.drawLine(0, 0, 0, self.size().height())
-        painter.drawLine(self.size().width(), 0, self.size().width(), self.size().height())
-        painter.drawLine(0, self.size().height(), self.size().width(), self.size().height())
+        # pen1 = QPen(Qt.black, 2, Qt.SolidLine)
+        # painter.setPen(pen1)
+        # painter.drawLine(0, 0, self.size().width(), 0)
+        # painter.drawLine(0, 0, 0, self.size().height())
+        # painter.drawLine(self.size().width(), 0, self.size().width(), self.size().height())
+        # painter.drawLine(0, self.size().height(), self.size().width(), self.size().height())
         painter.setPen(pen)
 
         # 棋盘的大致框架
@@ -92,8 +94,10 @@ class BoardWidget(QWidget):
         # 士所走的 X
         for j in (2, 9):
             for i in (4,):
-                painter.drawLine(self.lengths[j] - 40, self.lengths[i + 1] - 40, self.lengths[j] + 40,
-                                 self.lengths[i + 1] + 40)
-                painter.drawLine(self.lengths[j] - 40, self.lengths[i + 1] + 40, self.lengths[j] + 40,
-                                 self.lengths[i + 1] - 40)
+                painter.drawLine(self.lengths[j] - self.length, self.lengths[i + 1] - self.length,
+                                 self.lengths[j] + self.length,
+                                 self.lengths[i + 1] + self.length)
+                painter.drawLine(self.lengths[j] - self.length, self.lengths[i + 1] + self.length,
+                                 self.lengths[j] + self.length,
+                                 self.lengths[i + 1] - self.length)
         painter.end()
