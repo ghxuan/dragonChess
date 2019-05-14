@@ -13,12 +13,21 @@ class ChessWidget(QMainWindow):
     def __init__(self, *args, **kwargs):
         super(ChessWidget, self).__init__(*args, **kwargs)
         self.setStyleSheet("""
-                QWidget{
+                QMainWindow{
                     font-size:26px;
                     font-family:Microsoft YaHei;
+                    background-color:#fff;
                     color:#000000;
-                    background-color:#ffffff;
-                }""")
+                }
+                BoardWidget{
+                    font-size:26px;
+                    border:1px solid lightgrey;
+                    font-family:Microsoft YaHei;
+                    border:1px solid lightgrey;
+                    color:#000000;
+                    background-color:black;
+                }
+                """)
 
         self.setWindowFlags(Qt.WindowCloseButtonHint)
         self.resize(880, 600)
@@ -28,7 +37,7 @@ class ChessWidget(QMainWindow):
         else:
             icon = QIcon('title.ico')
         self.setWindowIcon(icon)
-        self.setWindowTitle('数独')
+        self.setWindowTitle('中国象棋')
 
         self.start = MainWidget()
         # self.start = StartWidget()
