@@ -5,11 +5,11 @@ from PySide2.QtGui import QPaintEvent, QPainter, QPen
 
 # noinspection PyArgumentList,PyUnboundLocalVariable
 class BoardWidget(QWidget):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, length=30, **kwargs):
         super(BoardWidget, self).__init__(*args, **kwargs)
         # self.resize(361, 321)
         # 小正方形的边长
-        self.length = 60
+        self.length = length * 2
         self.resize(self.length * 11, self.length * 10)
         self.lengths = dict([(i, i * self.length) for i in range(1, 11)])
 

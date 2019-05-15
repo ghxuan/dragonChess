@@ -8,15 +8,12 @@ class ChessPieces(QPushButton):
     def __init__(self, *args, length=30, **kwargs):
         super(ChessPieces, self).__init__(*args, **kwargs)
         self.length = length
-        # self.radius = length * 5 / 6
-        self.radius = length
-        self.center = length * 10, length * 9
+        self.area = length ** 2
+        self.radius = length * 5 / 6
+        self.center = length * (10 + 1 / 6), length * (9 + 1 / 6)
         self.resize(self.radius * 2, self.radius * 2)
-        self.setStyleSheet("""
-            ChessPieces{
-                    background-color:black;
-            }
-        """)
+        if self.parent():
+            self.base = self.parent().base
 
     def move(self, *arg__1):
         x, y = arg__1
@@ -25,15 +22,13 @@ class ChessPieces(QPushButton):
         pass
 
     def paintEvent(self, event: QPaintEvent):
-        painter = QPainter(self)
-        painter.setRenderHint(QPainter.Antialiasing, True)
-        painter.setPen(QPen(QColor(0, 160, 230), 2))
-        painter.setBrush(QColor(255, 160, 90))
-        painter.drawEllipse(QPointF(30, 30), 25, 25)
+        super(ChessPieces, self).paintEvent(event)
+        # painter = QPainter(self)
+        # painter.setRenderHint(QPainter.Antialiasing, True)
+        # painter.setPen(QPen(QColor(0, 160, 230), 2))
+        # painter.setBrush(QColor(255, 160, 90))
+        # painter.drawEllipse(QPointF(self.length, self.length), self.radius, self.radius)
         pass
 
     def mousePressEvent(self, e):
-        x, y = e.x() - 30, e.y() - 30
-        if x ** 2 + y ** 2 <= 525:
-            super(ChessPieces, self).mousePressEvent(e)
-            print(self.pos())
+        super(ChessPieces, self).mousePressEvent(e)
