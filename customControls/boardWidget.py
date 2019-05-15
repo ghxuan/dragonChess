@@ -30,6 +30,7 @@ class BoardWidget(QWidget):
         for i in range(9):
             painter.drawLine(self.lengths[1], self.lengths[i + 1], self.lengths[5], self.lengths[i + 1])
             painter.drawLine(self.lengths[6], self.lengths[i + 1], self.lengths[10], self.lengths[i + 1])
+            # painter.drawLine(self.lengths[5], self.lengths[i + 1], self.lengths[6], self.lengths[i + 1])
             painter.drawLine(self.lengths[i + 1], self.lengths[1], self.lengths[i + 1], self.lengths[9])
         painter.drawLine(self.lengths[5], self.lengths[1], self.lengths[6], self.lengths[1])
         painter.drawLine(self.lengths[5], self.lengths[i + 1], self.lengths[6], self.lengths[i + 1])
