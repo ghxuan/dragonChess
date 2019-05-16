@@ -13,7 +13,10 @@ class Car(ChessPieces):
             self.setText('車')
             self.setStyleSheet("color: #232323;background-color:#5d9eb2;")
 
-    pass
+    def check_one(self, x, y, ):
+        x, y = self.pos()
+        print(x, y)
+        pass
 
 
 class Horse(ChessPieces):
@@ -42,7 +45,6 @@ class Elephant(ChessPieces):
         else:
             self.setText('象')
             self.setStyleSheet("color: #232323;background-color:#5d9eb2;")
-
     pass
 
 
