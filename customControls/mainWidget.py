@@ -15,6 +15,7 @@ class MainWidget(QWidget):
                             1680: 'Gun', 900: 'Soldier', 1020: 'Soldier', 1140: 'Soldier'}
         self.board = BoardWidget(self, length=self.length)
         rad = str(self.length * 5 // 6)
+
         self.setStyleSheet("""
             ChessPieces{
                 border-color: #6ec672;

@@ -1,7 +1,6 @@
 import sys
 from PySide2.QtWidgets import QApplication
-from customControls.chessWidget import ChessWidget, MainWidget
-from customControls.chessPieces import ChessPieces
+from customControls.chessWidget import ChessWidget
 
 
 def main():
