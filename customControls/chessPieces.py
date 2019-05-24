@@ -44,4 +44,5 @@ class ChessPieces(QPushButton):
         if (x - self.radius) ** 2 + (y - self.radius) ** 2 <= self.area:
             self.parent().enter()
             pass
+        self.parent().animation.stop()
         pass
