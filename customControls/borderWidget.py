@@ -1,5 +1,5 @@
-from PySide2.QtCore import Qt, QRect
-from PySide2.QtWidgets import QWidget
+from PySide2.QtCore import Qt, QRect, QPropertyAnimation
+from PySide2.QtWidgets import QWidget, QGraphicsOpacityEffect
 from PySide2.QtGui import QPaintEvent, QPainter, QPen, QColor
 
 
@@ -55,6 +55,17 @@ class BorderWidget(QWidget):
         self.setAttribute(Qt.WA_TransparentForMouseEvents, True)
         self.resize(self.lengths[12], self.lengths[12])
         self.center = length * 10, length * 9
+        self.opacity = QGraphicsOpacityEffect(self)
+        self.setGraphicsEffect(self.opacity)
+        self.opacity.setOpacity(0)
+        self.animation = QPropertyAnimation(self.opacity, b'opacity')
+        self.animation.setDuration(1000)
+        self.animation.setStartValue(0)
+        # self.animation.setKeyValueAt(0.25, 0.67)
+        self.animation.setKeyValueAt(0.5, 1)
+        # self.animation.setKeyValueAt(0.75, 0.67)
+        self.animation.setEndValue(0)
+        self.animation.setLoopCount(-1)
 
     def paintEvent(self, event: QPaintEvent):
         painter = QPainter()

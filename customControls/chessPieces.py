@@ -1,5 +1,6 @@
+from PySide2.QtCore import QPointF
 from PySide2.QtWidgets import QPushButton
-from PySide2.QtGui import QPaintEvent
+from PySide2.QtGui import QPaintEvent, QPainter, QPen, QColor
 
 from customControls.borderWidget import BorderWidget
 
@@ -26,9 +27,8 @@ class ChessPieces(QPushButton):
         super(ChessPieces, self).paintEvent(event)
         # painter = QPainter(self)
         # painter.setRenderHint(QPainter.Antialiasing, True)
-        # painter.setPen(QPen(QColor(0, 160, 230), 2))
         # painter.setBrush(QColor(255, 160, 90))
-        # painter.drawEllipse(QPointF(self.length, self.length), self.radius, self.radius)
+        # painter.drawEllipse(QPointF(self.radius, self.radius), self.radius, self.radius)
         pass
 
     def mousePressEvent(self, e):
@@ -40,9 +40,13 @@ class ChessPieces(QPushButton):
 
     def enterEvent(self, event):
         super(ChessPieces, self).enterEvent(event)
-        x, y = event.pos().toTuple()
-        if (x - self.radius) ** 2 + (y - self.radius) ** 2 <= self.area:
-            self.parent().enter()
-            pass
-        self.parent().animation.stop()
+        self.parent().enter()
+        # x, y = event.pos().toTuple()
+        # if (x - self.radius) ** 2 + (y - self.radius) ** 2 <= self.area:
+        #     self.parent().enter()
+        # self.parent().animation.stop()
         pass
+
+    def leaveEvent(self, event):
+        super(ChessPieces, self).leaveEvent(event)
+        self.parent().leave()

@@ -1,6 +1,6 @@
-from PySide2.QtCore import Qt, QRect, QPropertyAnimation, QSize
+from PySide2.QtCore import Qt, QRect, QSize
 
-from PySide2.QtWidgets import QWidget, QGraphicsOpacityEffect
+from PySide2.QtWidgets import QWidget
 from PySide2.QtGui import QPaintEvent, QPainter, QPen, QColor
 
 from customControls.borderWidget import BorderWidget
@@ -22,13 +22,7 @@ class PiecesWidget(QWidget):
             self.base = self.parent().base
         self.chess = ChessPieces(self)
         self.border = BorderWidget(self)
-        self.bor = QGraphicsOpacityEffect(self.border)
-        self.bor.setOpacity(0)
-        self.animation = QPropertyAnimation(self.bor, b'opacity')
-        self.animation.setDuration(1000)
-        self.animation.setStartValue(0)
-        self.animation.setKeyValueAt(0.5, 1)
-        self.animation.setEndValue(0)
+        self.animation = self.border.animation
 
     def check(self):
         pass
@@ -55,6 +49,11 @@ class PiecesWidget(QWidget):
 
     def enter(self):
         self.animation.start()
+        pass
+
+    def leave(self):
+        self.animation.stop()
+        self.border.opacity.setOpacity(0)
         pass
 
     def mousePressEvent(self, e):
