@@ -33,14 +33,16 @@ class ChessPieces(QPushButton):
 
     def mousePressEvent(self, e):
         super(ChessPieces, self).mousePressEvent(e)
-        x, y = e.pos().toTuple()
-        if (x - self.radius) ** 2 + (y - self.radius) ** 2 <= self.area:
-            self.parent().press()
-            pass
+        self.parent().press()
+        self.parent().pre = True
+        # x, y = e.pos().toTuple()
+        # if (x - self.radius) ** 2 + (y - self.radius) ** 2 <= self.area:
+        #     pass
 
     def enterEvent(self, event):
         super(ChessPieces, self).enterEvent(event)
-        self.parent().enter()
+        if not self.parent().pre:
+            self.parent().enter()
         # x, y = event.pos().toTuple()
         # if (x - self.radius) ** 2 + (y - self.radius) ** 2 <= self.area:
         #     self.parent().enter()
@@ -49,4 +51,5 @@ class ChessPieces(QPushButton):
 
     def leaveEvent(self, event):
         super(ChessPieces, self).leaveEvent(event)
-        self.parent().leave()
+        if not self.parent().pre:
+            self.parent().leave()

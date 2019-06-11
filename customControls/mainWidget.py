@@ -13,6 +13,8 @@ class MainWidget(QWidget):
         self.length = 30
         self.base_pieces = {2940: 'Car', 2880: 'Horse', 2820: 'Elephant', 2760: 'Bodyguard', 2700: 'General',
                             1680: 'Gun', 900: 'Soldier', 1020: 'Soldier', 1140: 'Soldier'}
+        self.base_pieces = {2940: 'Horse', 2880: 'Horse', 2820: 'Horse', 2760: 'Horse', 2700: 'Horse',
+                            1680: 'Horse', 900: 'Horse', 1020: 'Horse', 1140: 'Horse'}
         self.board = BoardWidget(self, length=self.length)
         rad = str(self.length * 5 // 6)
 
@@ -28,6 +30,7 @@ class MainWidget(QWidget):
                 border: 2px solid rgba(0, 0, 0, 0);
             }
         """)
+        self.can = set()
         self.base = {(30, 0): '', (-30, 0): '', (30, 60): '', (30, -60): '', (-30, 60): '', (-30, -60): '',
                      (30, 120): '', (30, -120): '', (-30, 120): '', (-30, -120): '', (30, 180): '', (30, -180): '',
                      (-30, 180): '', (-30, -180): '', (30, 240): '', (30, -240): '', (-30, 240): '', (-30, -240): '',
@@ -69,6 +72,10 @@ class MainWidget(QWidget):
                 self.base[x, y] = ''
             else:
                 piece = eval(f'{self.base_pieces[val]}(self, pos=(x, y), length=self.length)')
+                if x < 0:
+                    piece.same = True
+                else:
+                    piece.same = False
                 self.base[x, y] = piece
             # if val == 2940:
             #     piece = Car(self, pos=(x, y), length=self.length)

@@ -14,6 +14,7 @@ class BoardWidget(QWidget):
         self.lengths = dict([(i, i * self.length) for i in range(1, 11)])
 
     def paintEvent(self, event: QPaintEvent):
+        return
         painter = QPainter()
         painter.begin(self)
         painter.setRenderHints(QPainter.SmoothPixmapTransform)

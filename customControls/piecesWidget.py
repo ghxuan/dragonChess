@@ -12,7 +12,6 @@ class PiecesWidget(QWidget):
         super(PiecesWidget, self).__init__(*args, **kwargs)
         self.setWindowFlags(Qt.FramelessWindowHint)
         self.setAttribute(Qt.WA_TranslucentBackground)
-        self.can = set()
         self.length = length
         self.area = length ** 2
         self.diam = self.length * 2
@@ -20,11 +19,20 @@ class PiecesWidget(QWidget):
         self.resize(self.diam, self.diam)
         if self.parent():
             self.base = self.parent().base
+            self.can = self.parent().can
+        self.case = {'x': (length * 9, '(cur, y)'), 'y': (length * 8, '(x, cur)')}
         self.chess = ChessPieces(self)
         self.border = BorderWidget(self)
         self.animation = self.border.animation
+        self.pre = False
 
     def check(self):
+        x, y = self.pos()
+        self.check_(x, y, f=1, k='x')
+        self.check_(x, y, f=-1, k='x')
+        self.check_(x, y, f=1, k='y')
+        self.check_(x, y, f=-1, k='y')
+        print(x, y)
         pass
 
     def pos(self):
@@ -45,6 +53,11 @@ class PiecesWidget(QWidget):
         pass
 
     def press(self):
+        self.can.clear()
+        self.check()
+        self.animation.stop()
+        self.border.opacity.setOpacity(1)
+        print(self.can)
         pass
 
     def enter(self):
@@ -58,12 +71,11 @@ class PiecesWidget(QWidget):
 
     def mousePressEvent(self, e):
         super(PiecesWidget, self).mousePressEvent(e)
-        # self.can.clear()
-        # self.check()
         pass
 
     def enterEvent(self, event):
         super(PiecesWidget, self).enterEvent(event)
+        # print(self.same)
         pass
 
     pass
