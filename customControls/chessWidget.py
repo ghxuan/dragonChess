@@ -37,7 +37,7 @@ class ChessWidget(QMainWindow):
         else:
             icon = QIcon('title.ico')
         self.setWindowIcon(icon)
-        # self.setWindowTitle('中国象棋')
+        self.setWindowTitle('中国象棋')
 
         self.start = MainWidget()
         # self.start = StartWidget()

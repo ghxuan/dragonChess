@@ -13,8 +13,6 @@ class MainWidget(QWidget):
         self.length = 30
         self.base_pieces = {2940: 'Car', 2880: 'Horse', 2820: 'Elephant', 2760: 'Bodyguard', 2700: 'General',
                             1680: 'Gun', 900: 'Soldier', 1020: 'Soldier', 1140: 'Soldier'}
-        self.base_pieces = {2940: 'Horse', 2880: 'Horse', 2820: 'Horse', 2760: 'Horse', 2700: 'Horse',
-                            1680: 'Horse', 900: 'Horse', 1020: 'Horse', 1140: 'Horse'}
         self.board = BoardWidget(self, length=self.length)
         rad = str(self.length * 5 // 6)
 
