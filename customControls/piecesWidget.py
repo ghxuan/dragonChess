@@ -1,7 +1,7 @@
 from PySide2.QtCore import Qt, QRect, QSize
 
 from PySide2.QtWidgets import QWidget
-from PySide2.QtGui import QPaintEvent, QPainter, QPen, QColor
+from PySide2.QtGui import QPaintEvent, QPainter, QPen, QColor, QRegion
 
 from customControls.borderWidget import BorderWidget
 from customControls.chessPieces import ChessPieces
@@ -10,7 +10,7 @@ from customControls.chessPieces import ChessPieces
 class PiecesWidget(QWidget):
     def __init__(self, *args, length=30, **kwargs):
         super(PiecesWidget, self).__init__(*args, **kwargs)
-        self.setWindowFlags(Qt.FramelessWindowHint)
+        self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowMinimizeButtonHint)
         self.setAttribute(Qt.WA_TranslucentBackground)
         self.length = length
         self.area = length ** 2
@@ -24,6 +24,7 @@ class PiecesWidget(QWidget):
         self.chess = ChessPieces(self)
         self.border = BorderWidget(self)
         self.animation = self.border.animation
+        self.setAttribute(Qt.WA_TransparentForMouseEvents, True)
         self.pre = False
 
     def check(self):

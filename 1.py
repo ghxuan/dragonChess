@@ -1,40 +1,30 @@
 import sys
-
-# from PyQt5.QtWidgets import *
-# from PyQt5.QtCore import *
-# from PyQt5.QtGui import *
-
-from PySide2.QtWidgets import *
-from PySide2.QtCore import *
-from PySide2.QtGui import *
+from PySide2.QtWidgets import QApplication, QWidget, QPushButton
+from PySide2.QtCore import Qt, QRect, QSize
+from PySide2.QtGui import QPaintEvent, QPainter, QPen, QColor, QRegion
 
 
-class Widget(QPushButton):
-    def __init__(self):
-        super(Widget, self).__init__()
-        self.setWindowFlags(Qt.FramelessWindowHint)
+class Button(QPushButton):
+    def __init__(self, *args, length=30, **kwargs):
+        super(Button, self).__init__(*args, **kwargs)
+        self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowMinimizeButtonHint)
         self.setAttribute(Qt.WA_TranslucentBackground)
-        self.pixmap = QPixmap('resource/ico/title.ico')
-        pass
+        self.length = length
+        self.area = length ** 2
+        self.diam = self.length * 2
+        self.center = length * 10, length * 9
+        self.resize(self.diam + 10, self.diam + 10)
+        self.setMask(QRegion(0, 0, self.diam, self.diam, QRegion.Ellipse))
 
-    def paintEvent(self, a0: QPaintEvent):
-        # r1 = QRegion(QRect(0, 0, 50, 50), QRegion.Ellipse)
-        self.animation = QPropertyAnimation(self, b'size')
-        self.animation.setStartValue(QRect(0, 0, 50, 50))
-        self.animation.setEndValue(QRect(0, 0, 60, 60))
-        self.animation.setEasingCurve(QEasingCurve.InOutCirc)
-        # r2 = QRegion(QRect(self.rect().x() + self.rect().width() // 4, self.rect().y() + self.rect().height() // 4,
-        #                    self.rect().width() // 4, self.rect().height() // 4))
-        # r3 = r1.xored(r2)
-        # self.setMask(r1)
-        painter = QPainter(self)
-        painter.setRenderHint(QPainter.Antialiasing)
-        painter.drawPixmap(0, 0, self.pixmap.scaled(self.size(), Qt.IgnoreAspectRatio, Qt.SmoothTransformation))
-        pass
+    pass
 
-    def enterEvent(self, a0: QEvent):
-        self.animation.start()
-        pass
+
+class Widget(QWidget):
+    def __init__(self, *args, **kwargs):
+        super(Widget, self).__init__(*args, **kwargs)
+        self.but = Button(self)
+
+    pass
 
 
 def main():

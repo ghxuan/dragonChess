@@ -7,7 +7,9 @@ class MBorderWidget(QWidget):
     def __init__(self, *args, length=30, **kwargs):
         super(MBorderWidget, self).__init__(*args, **kwargs)
         self.length = length
-        self.resize(length * 2, length * 2)
+        self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowMinimizeButtonHint)
+        self.setAttribute(Qt.WA_TranslucentBackground)
+        # self.resize(length * 2, length * 2)
         self.center = length * 10, length * 9
 
     def pos(self):
@@ -20,36 +22,41 @@ class MBorderWidget(QWidget):
 
     def mousePressEvent(self, e):
         super(MBorderWidget, self).mousePressEvent(e)
+        print(self.pos(), 111)
 
     def paintEvent(self, event: QPaintEvent):
         x, y = self.pos()
         painter = QPainter()
         painter.begin(self)
-        # painter.setRenderHints(QPainter.SmoothPixmapTransform)
-        pen = QPen(Qt.black, 1, Qt.SolidLine)
-        painter.setPen(pen)
-        # 右上
-        painter.drawLine(40, 5, 55, 5)
-        painter.drawLine(55, 5, 55, 20)
-        # 左上
-        painter.drawLine(5, 5, 20, 5)
-        painter.drawLine(5, 5, 5, 20)
-
-        # 右下
-        painter.drawLine(40, 55, 55, 55)
-        painter.drawLine(55, 40, 55, 55)
-        # 左下
-        painter.drawLine(5, 55, 20, 55)
-        painter.drawLine(5, 55, 5, 40)
+        # # painter.setRenderHints(QPainter.SmoothPixmapTransform)
+        # pen = QPen(Qt.black, 1, Qt.SolidLine)
+        # painter.setPen(pen)
+        # # 右上
+        # painter.drawLine(40, 5, 55, 5)
+        # painter.drawLine(55, 5, 55, 20)
+        # # 左上
+        # painter.drawLine(5, 5, 20, 5)
+        # painter.drawLine(5, 5, 5, 20)
+        #
+        # # 右下
+        # painter.drawLine(40, 55, 55, 55)
+        # painter.drawLine(55, 40, 55, 55)
+        # # 左下
+        # painter.drawLine(5, 55, 20, 55)
+        # painter.drawLine(5, 55, 5, 40)
         painter.setPen(QPen(QColor(0, 160, 230), 2))
-        # painter.setBrush(QColor(255, 160, 90))
-        painter.drawRect(QRect(0, 0, self.length * 2, self.length * 2))
+        painter.setBrush(QColor(255, 160, 90))
+        # painter.drawRect(QRect(0, 0, self.length * 2, self.length * 2))
+        painter.setBrush(QColor(255, 160, 0))
+        painter.drawEllipse(0, 0, 60, 60)
         painter.end()
 
 
 class BorderWidget(QWidget):
     def __init__(self, *args, length=30, **kwargs):
         super(BorderWidget, self).__init__(*args, **kwargs)
+        self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowMinimizeButtonHint)
+        self.setAttribute(Qt.WA_TranslucentBackground)
         self.length = length
         self.lengths = dict((i, length * i / 6) for i in range(1, 13))
         self.setAttribute(Qt.WA_TransparentForMouseEvents, True)

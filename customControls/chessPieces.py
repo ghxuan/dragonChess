@@ -2,8 +2,6 @@ from PySide2.QtCore import QPointF
 from PySide2.QtWidgets import QPushButton
 from PySide2.QtGui import QPaintEvent, QPainter, QPen, QColor
 
-from customControls.borderWidget import BorderWidget
-
 
 # noinspection PyArgumentList,PyUnboundLocalVariable
 class ChessPieces(QPushButton):
