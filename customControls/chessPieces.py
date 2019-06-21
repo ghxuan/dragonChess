@@ -1,6 +1,6 @@
-from PySide2.QtCore import QPointF
+from PySide2.QtCore import QPointF, Qt
 from PySide2.QtWidgets import QPushButton
-from PySide2.QtGui import QPaintEvent, QPainter, QPen, QColor
+from PySide2.QtGui import QPaintEvent, QPainter, QPen, QColor, QRegion, QPainterPath
 
 
 # noinspection PyArgumentList,PyUnboundLocalVariable
@@ -17,16 +17,18 @@ class ChessPieces(QPushButton):
         if self.parent():
             self.base = self.parent().base
         self.move(self.length / 6, self.length / 6)
+        mask = QRegion(-1, -1, self.diam + 1, self.diam + 1, QRegion.Ellipse)
+        self.setMask(mask)
 
     def check(self):
         pass
 
     def paintEvent(self, event: QPaintEvent):
+        painter = QPainter(self)
+        painter.setRenderHint(QPainter.Antialiasing, True)
+        painter.setBrush(QColor(255, 160, 90))
+        painter.drawEllipse(QPointF(self.radius, self.radius), self.radius - 1, self.radius - 1)
         super(ChessPieces, self).paintEvent(event)
-        # painter = QPainter(self)
-        # painter.setRenderHint(QPainter.Antialiasing, True)
-        # painter.setBrush(QColor(255, 160, 90))
-        # painter.drawEllipse(QPointF(self.radius, self.radius), self.radius, self.radius)
         pass
 
     def mousePressEvent(self, e):

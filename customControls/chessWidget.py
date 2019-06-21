@@ -25,7 +25,6 @@ class ChessWidget(QMainWindow):
                     font-family:Microsoft YaHei;
                     border:1px solid lightgrey;
                     color:#000000;
-                    background-color:black;
                 }
                 """)
 

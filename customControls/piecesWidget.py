@@ -1,6 +1,6 @@
-from PySide2.QtCore import Qt, QRect, QSize
+from PySide2.QtCore import Qt, QRect, QSize, QPointF
 
-from PySide2.QtWidgets import QWidget
+from PySide2.QtWidgets import QWidget, QLabel
 from PySide2.QtGui import QPaintEvent, QPainter, QPen, QColor, QRegion
 
 from customControls.borderWidget import BorderWidget
@@ -13,6 +13,7 @@ class PiecesWidget(QWidget):
         self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowMinimizeButtonHint)
         self.setAttribute(Qt.WA_TranslucentBackground)
         self.length = length
+        self.radius = length * 5 / 6
         self.area = length ** 2
         self.diam = self.length * 2
         self.center = length * 10, length * 9
@@ -24,7 +25,7 @@ class PiecesWidget(QWidget):
         self.chess = ChessPieces(self)
         self.border = BorderWidget(self)
         self.animation = self.border.animation
-        self.setAttribute(Qt.WA_TransparentForMouseEvents, True)
+        self.setStyleSheet('')
         self.pre = False
 
     def check(self):
@@ -49,8 +50,9 @@ class PiecesWidget(QWidget):
         super(PiecesWidget, self).paintEvent(event)
         # painter = QPainter(self)
         # painter.setPen(QPen(QColor(0, 160, 230), 2))
-        # # painter.setBrush(QColor(255, 160, 90))
-        # painter.drawRect(QRect(0, 0, self.length * 2, self.length * 2))
+        # painter.setBrush(QColor(255, 160, 90))
+        # # painter.drawRect(QRect(0, 0, self.length * 2, self.length * 2))
+        # painter.drawEllipse(QPointF(self.length, self.length), self.radius - 2, self.radius - 2)
         pass
 
     def press(self):
@@ -79,4 +81,5 @@ class PiecesWidget(QWidget):
         # print(self.same)
         pass
 
-    pass
+    def leaveEvent(self, event):
+        pass
