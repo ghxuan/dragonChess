@@ -8,10 +8,10 @@ class Car(PiecesWidget):
         self.move(x, y)
         if x < 0:
             self.chess.setText('车')
-            self.setStyleSheet("color: #c6385a;background-color:#5d9eb2;")
+            self.setStyleSheet("color: #c6385a;")
         else:
             self.chess.setText('車')
-            self.setStyleSheet("color: #232323;background-color:#5d9eb2;")
+            self.setStyleSheet("color: #232323;")
 
     def check_(self, x, y, f=1, k='x'):
         cur, temp = eval(k), self.case.get(k, (self.length * 9, '(cur, y)'))
@@ -37,10 +37,10 @@ class Horse(PiecesWidget):
                      'y': (length * 8, '(x, cur)', '[(x - self.diam, cur), (x + self.diam, cur)]')}
         if x < 0:
             self.chess.setText('马')
-            self.setStyleSheet("color: #c6385a;background-color:#5d9eb2;")
+            self.setStyleSheet("color: #c6385a;")
         else:
             self.chess.setText('馬')
-            self.setStyleSheet("color: #232323;background-color:#5d9eb2;")
+            self.setStyleSheet("color: #232323;")
 
     def check_(self, x, y, f=1, k='x'):
         cur, temp = eval(k), self.case.get(k, (self.length * 9,
@@ -75,11 +75,11 @@ class Elephant(PiecesWidget):
         if x < 0:
             self.forward = -1
             self.chess.setText('相')
-            self.setStyleSheet("color: #c6385a;background-color:#5d9eb2;")
+            self.setStyleSheet("color: #c6385a;")
         else:
             self.forward = 1
             self.chess.setText('象')
-            self.setStyleSheet("color: #232323;background-color:#5d9eb2;")
+            self.setStyleSheet("color: #232323;")
 
     def check_(self, x, y, f=1, k='x'):
         cur, temp = eval(k), self.case.get((f, k),
@@ -115,10 +115,10 @@ class Bodyguard(PiecesWidget):
         }
         if x < 0:
             self.chess.setText('士')
-            self.setStyleSheet("color: #c6385a;background-color:#5d9eb2;")
+            self.setStyleSheet("color: #c6385a;")
         else:
             self.chess.setText('仕')
-            self.setStyleSheet("color: #232323;background-color:#5d9eb2;")
+            self.setStyleSheet("color: #232323;")
 
     def check_(self, x, y, f=1, k='x'):
         cur, temp = eval(k), self.case.get((f, k),
@@ -143,10 +143,10 @@ class General(PiecesWidget):
         self.move(x, y)
         if x < 0:
             self.chess.setText('帅')
-            self.setStyleSheet("color: #c6385a;background-color:#5d9eb2;")
+            self.setStyleSheet("color: #c6385a;")
         else:
             self.chess.setText('将')
-            self.setStyleSheet("color: #232323;background-color:#5d9eb2;")
+            self.setStyleSheet("color: #232323;")
 
     def check_(self, x, y, f=1, k='x'):
         cur, temp = eval(k), self.case.get(k, (self.length * 9, '(cur, y)'))
@@ -170,9 +170,9 @@ class Gun(PiecesWidget):
         self.chess.setText('炮')
         self.move(x, y)
         if x < 0:
-            self.setStyleSheet("color: #c6385a;background-color:#5d9eb2;")
+            self.setStyleSheet("color: #c6385a;")
         else:
-            self.setStyleSheet("color: #232323;background-color:#5d9eb2;")
+            self.setStyleSheet("color: #232323;")
 
     def check_(self, x, y, f=1, k='x'):
         cur, temp = eval(k), self.case.get(k, (self.length * 9, '(cur, y)'))
@@ -203,11 +203,11 @@ class Soldier(PiecesWidget):
         if x < 0:
             self.forward = -1
             self.chess.setText('兵')
-            self.setStyleSheet("color: #c6385a;background-color:#5d9eb2;")
+            self.setStyleSheet("color: #c6385a;")
         else:
             self.forward = 1
             self.chess.setText('卒')
-            self.setStyleSheet("color: #232323;background-color:#5d9eb2;")
+            self.setStyleSheet("color: #232323;")
 
     def check_(self, x, y, f=1, k='x'):
         if f == self.forward and k == 'x':
