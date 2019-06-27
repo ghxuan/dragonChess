@@ -8,6 +8,7 @@ class RootPieces(QWidget):
         super(RootPieces, self).__init__(*args, **kwargs)
         if self.parent():
             self.base = self.parent().base
+            self.can = self.parent().can
         self.length = length
         self.radius = length * 5 / 6
         self.area = length ** 2
@@ -15,6 +16,7 @@ class RootPieces(QWidget):
         self.center = length * 10, length * 9
         self.resize(self.diam, self.diam)
         x, y = pos
+        self.xy = pos
         self.move(x, y)
         self.foot = FootPieces(self, length=length)
         self.border = FWidget(self, length=length)
@@ -36,7 +38,6 @@ class RootPieces(QWidget):
 class FootPieces(QWidget):
     def __init__(self, *args, length=30, **kwargs):
         super(FootPieces, self).__init__(*args, **kwargs)
-        self.can = set()
         self.length = length
         self.radius = length * 5 / 6
         self.area = self.radius ** 2
@@ -45,6 +46,8 @@ class FootPieces(QWidget):
         self.resize(self.diam, self.diam)
         if self.parent():
             self.base = self.parent().base
+            self.can = self.parent().can
+            self.xy = self.parent().xy
         self.move(self.length / 6, self.length / 6)
         mask = QRegion(-1, -1, self.diam + 1, self.diam + 1, QRegion.Ellipse)
         self.setMask(mask)
@@ -56,13 +59,16 @@ class FootPieces(QWidget):
 
     def enterEvent(self, event):
         super(FootPieces, self).enterEvent(event)
-        self.border.animation.start()
+        print(self.can, )
+        if self.xy in self.can:
+            self.border.animation.start()
         pass
 
     def leaveEvent(self, event):
         super(FootPieces, self).leaveEvent(event)
-        self.border.animation.stop()
-        self.border.opacity.setOpacity(0)
+        if self.xy in self.can:
+            self.border.animation.stop()
+            self.border.opacity.setOpacity(0)
 
 
 class FWidget(QWidget):

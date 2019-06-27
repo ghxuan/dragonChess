@@ -30,26 +30,3 @@ class ChessPieces(QPushButton):
         painter.drawEllipse(QPointF(self.radius, self.radius), self.radius - 1, self.radius - 1)
         super(ChessPieces, self).paintEvent(event)
         pass
-
-    def mousePressEvent(self, e):
-        super(ChessPieces, self).mousePressEvent(e)
-        self.parent().press()
-        self.parent().pre = True
-        # x, y = e.pos().toTuple()
-        # if (x - self.radius) ** 2 + (y - self.radius) ** 2 <= self.area:
-        #     pass
-
-    def enterEvent(self, event):
-        super(ChessPieces, self).enterEvent(event)
-        if not self.parent().pre:
-            self.parent().enter()
-        # x, y = event.pos().toTuple()
-        # if (x - self.radius) ** 2 + (y - self.radius) ** 2 <= self.area:
-        #     self.parent().enter()
-        # self.parent().animation.stop()
-        pass
-
-    def leaveEvent(self, event):
-        super(ChessPieces, self).leaveEvent(event)
-        if not self.parent().pre:
-            self.parent().leave()

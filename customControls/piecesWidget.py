@@ -3,7 +3,6 @@ from PySide2.QtCore import Qt, QRect, QSize, QPointF
 from PySide2.QtWidgets import QWidget, QLabel
 from PySide2.QtGui import QPaintEvent, QPainter, QPen, QColor, QRegion
 
-from customControls.borderWidget import BorderWidget
 from customControls.chessPieces import ChessPieces
 
 
@@ -23,8 +22,6 @@ class PiecesWidget(QWidget):
             self.can = self.parent().can
         self.case = {'x': (length * 9, '(cur, y)'), 'y': (length * 8, '(x, cur)')}
         self.chess = ChessPieces(self)
-        self.border = BorderWidget(self)
-        self.animation = self.border.animation
         self.setStyleSheet('')
         self.pre = False
 
@@ -46,15 +43,6 @@ class PiecesWidget(QWidget):
         super(PiecesWidget, self).move(x + self.center[0], y + self.center[1])
         pass
 
-    def paintEvent(self, event: QPaintEvent):
-        super(PiecesWidget, self).paintEvent(event)
-        # painter = QPainter(self)
-        # painter.setPen(QPen(QColor(0, 160, 230), 2))
-        # painter.setBrush(QColor(255, 160, 90))
-        # # painter.drawRect(QRect(0, 0, self.length * 2, self.length * 2))
-        # painter.drawEllipse(QPointF(self.length, self.length), self.radius - 2, self.radius - 2)
-        pass
-
     def press(self):
         self.can.clear()
         self.check()
@@ -70,16 +58,4 @@ class PiecesWidget(QWidget):
     def leave(self):
         self.animation.stop()
         self.border.opacity.setOpacity(0)
-        pass
-
-    def mousePressEvent(self, e):
-        super(PiecesWidget, self).mousePressEvent(e)
-        pass
-
-    def enterEvent(self, event):
-        super(PiecesWidget, self).enterEvent(event)
-        # print(self.same)
-        pass
-
-    def leaveEvent(self, event):
         pass
