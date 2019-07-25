@@ -1,5 +1,4 @@
 from PySide2.QtCore import Qt, QRect, QSize, QPointF
-
 from PySide2.QtWidgets import QWidget, QLabel
 from PySide2.QtGui import QPaintEvent, QPainter, QPen, QColor, QRegion
 

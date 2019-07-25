@@ -94,11 +94,3 @@ class MainWidget(QWidget):
                     piece.same = False
                 self.base[x, y] = piece
 
-    def mousePressEvent(self, e):
-        super(MainWidget, self).mousePressEvent(e)
-        print(self.can)
-        pass
-
-    def mouseMoveEvent(self, event):
-        super(MainWidget, self).mouseMoveEvent(event)
-        pass

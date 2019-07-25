@@ -20,6 +20,9 @@ class ChessPieces(QPushButton):
         mask = QRegion(-1, -1, self.diam + 1, self.diam + 1, QRegion.Ellipse)
         self.setMask(mask)
 
+    def mousePressEvent(self, e):
+        print(self.pos())
+
     def check(self):
         pass
 
