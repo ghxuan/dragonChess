@@ -10,6 +10,7 @@ class PiecesWidget(QWidget):
         super(PiecesWidget, self).__init__(*args, **kwargs)
         self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowMinimizeButtonHint)
         self.setAttribute(Qt.WA_TranslucentBackground)
+        self.setAttribute(Qt.WA_TransparentForMouseEvents, True)
         self.length = length
         self.radius = length * 5 / 6
         self.area = length ** 2
@@ -40,21 +41,4 @@ class PiecesWidget(QWidget):
     def move(self, *arg__1):
         x, y = arg__1
         super(PiecesWidget, self).move(x + self.center[0], y + self.center[1])
-        pass
-
-    def press(self):
-        self.can.clear()
-        self.check()
-        self.animation.stop()
-        self.border.opacity.setOpacity(1)
-        print(self.can)
-        pass
-
-    def enter(self):
-        self.animation.start()
-        pass
-
-    def leave(self):
-        self.animation.stop()
-        self.border.opacity.setOpacity(0)
         pass

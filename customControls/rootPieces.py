@@ -1,27 +1,23 @@
-from PySide2.QtCore import Qt, QPropertyAnimation
+from PySide2.QtCore import Qt, QPropertyAnimation, QPointF
 from PySide2.QtWidgets import QWidget, QGraphicsOpacityEffect
-from PySide2.QtGui import QPaintEvent, QPainter, QPen, QRegion
+from PySide2.QtGui import QPaintEvent, QPainter, QPen, QRegion, QColor
 
 
 class RootPieces(QWidget):
     def __init__(self, *args, pos=(0, 0), length=30, **kwargs):
         super(RootPieces, self).__init__(*args, **kwargs)
-        if self.parent():
-            self.base = self.parent().base
-            self.can = self.parent().can
+        # self.setAttribute(Qt.WA_TransparentForMouseEvents, True)
         self.length = length
         self.radius = length * 5 / 6
-        self.area = length ** 2
-        self.diam = self.length * 2
-        self.center = length * 10, length * 9
+        self.area = self.radius ** 2
+        self.diam = self.radius * 2
+        self.center = length * (10 + 1 / 6), length * (9 + 1 / 6)
         self.resize(self.diam, self.diam)
         x, y = pos
-        self.xy = pos
         self.move(x, y)
-        self.foot = FootPieces(self, length=length)
-        self.border = FWidget(self, length=length)
-        self.foot.border = self.border
-        self.foot.root = self
+        # self.move(self.length / 6, self.length / 6)
+        mask = QRegion(-1, -1, self.diam + 1, self.diam + 1, QRegion.Ellipse)
+        self.setMask(mask)
 
     def pos(self):
         x, y = super(RootPieces, self).pos().toTuple()
@@ -32,43 +28,16 @@ class RootPieces(QWidget):
         super(RootPieces, self).move(x + self.center[0], y + self.center[1])
         pass
 
-    pass
-
-
-class FootPieces(QWidget):
-    def __init__(self, *args, length=30, **kwargs):
-        super(FootPieces, self).__init__(*args, **kwargs)
-        self.length = length
-        self.radius = length * 5 / 6
-        self.area = self.radius ** 2
-        self.diam = self.radius * 2
-        self.center = length * (10 + 1 / 6), length * (9 + 1 / 6)
-        self.resize(self.diam, self.diam)
-        if self.parent():
-            self.base = self.parent().base
-            self.can = self.parent().can
-            self.xy = self.parent().xy
-        self.move(self.length / 6, self.length / 6)
-        mask = QRegion(-1, -1, self.diam + 1, self.diam + 1, QRegion.Ellipse)
-        self.setMask(mask)
-
-    def mousePressEvent(self, e):
-        super(FootPieces, self).mousePressEvent(e)
-        self.parent().press()
-        self.parent().pre = True
-
-    def enterEvent(self, event):
-        super(FootPieces, self).enterEvent(event)
-        print(self.can, )
-        if self.xy in self.can:
-            self.border.animation.start()
+    def paintEvent(self, event: QPaintEvent):
+        painter = QPainter(self)
+        # pen = QPen(Qt.white, 0, Qt.SolidLine)
+        painter.setPen(Qt.NoPen)
+        painter.setRenderHint(QPainter.Antialiasing, True)
+        painter.setBrush(QColor(255, 160, 90))
+        painter.setBrush(Qt.NoBrush)
+        painter.drawEllipse(QPointF(self.radius, self.radius), self.radius - 1, self.radius - 1)
+        super(RootPieces, self).paintEvent(event)
         pass
-
-    def leaveEvent(self, event):
-        super(FootPieces, self).leaveEvent(event)
-        if self.xy in self.can:
-            self.border.animation.stop()
-            self.border.opacity.setOpacity(0)
 
 
 class FWidget(QWidget):
@@ -76,9 +45,9 @@ class FWidget(QWidget):
         super(FWidget, self).__init__(*args, **kwargs)
         self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowMinimizeButtonHint)
         self.setAttribute(Qt.WA_TranslucentBackground)
+        self.setAttribute(Qt.WA_TransparentForMouseEvents, True)
         self.length = length
         self.lengths = dict((i, length * i / 6) for i in range(1, 13))
-        self.setAttribute(Qt.WA_TransparentForMouseEvents, True)
         self.resize(self.lengths[12], self.lengths[12])
         self.center = length * 10, length * 9
         self.opacity = QGraphicsOpacityEffect(self)

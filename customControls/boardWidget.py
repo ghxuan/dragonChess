@@ -7,6 +7,7 @@ from PySide2.QtGui import QPaintEvent, QPainter, QPen
 class BoardWidget(QWidget):
     def __init__(self, *args, length=30, **kwargs):
         super(BoardWidget, self).__init__(*args, **kwargs)
+        self.setAttribute(Qt.WA_TransparentForMouseEvents, True)
         # self.resize(361, 321)
         # 小正方形的边长
         self.length = length * 2
