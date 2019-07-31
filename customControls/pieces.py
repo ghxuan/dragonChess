@@ -19,7 +19,7 @@ class Car(PiecesWidget):
         while f * cur < temp:
             cur += f * self.diam
             tuples = eval(strings)
-            res = self.base.get(tuples, 0)
+            res = self.ptc.get(tuples, 0)
             if res == '':
                 self.can.add(tuples)
             else:
@@ -49,12 +49,12 @@ class Horse(PiecesWidget):
         if f * cur < temp:
             cur += f * self.diam
             tuples = eval(strings)
-            res = self.base.get(tuples, 0)
+            res = self.ptc.get(tuples, 0)
             if res == '':
                 cur += f * self.diam
                 lists = eval(string)
                 for l in lists:
-                    res = self.base.get(l, 0)
+                    res = self.ptc.get(l, 0)
                     if res == '':
                         self.can.add(l)
                     elif res != 0 and self.same != res.same:
@@ -91,11 +91,11 @@ class Elephant(PiecesWidget):
             tuples = eval(strings)
             if tuples[0] * self.forward < 0:
                 return
-            res = self.base.get(tuples, 0)
+            res = self.ptc.get(tuples, 0)
             if res == '':
                 lists = eval(string)
                 for l in lists:
-                    res = self.base.get(l, 0)
+                    res = self.ptc.get(l, 0)
                     if res == '':
                         self.can.add(l)
                     elif res != 0 and self.same != res.same:
@@ -129,7 +129,7 @@ class Bodyguard(PiecesWidget):
             tuples = eval(strings)
             if abs(tuples[1]) > 60 or abs(tuples[0]) < 210:
                 return
-            res = self.base.get(tuples, 0)
+            res = self.ptc.get(tuples, 0)
             if res == '':
                 self.can.add(tuples)
             elif res != 0 and self.same != res.same:
@@ -156,7 +156,7 @@ class General(PiecesWidget):
             tuples = eval(strings)
             if abs(tuples[1]) > 60 or abs(tuples[0]) < 210:
                 return
-            res = self.base.get(tuples, 0)
+            res = self.ptc.get(tuples, 0)
             if res == '':
                 self.can.add(tuples)
             elif res != 0 and self.same != res.same:
@@ -180,7 +180,7 @@ class Gun(PiecesWidget):
         while f * cur < temp:
             cur += f * self.diam
             tuples = eval(strings)
-            res = self.base.get(tuples, 0)
+            res = self.ptc.get(tuples, 0)
             if res == '':
                 self.can.add(tuples)
             else:
@@ -188,7 +188,7 @@ class Gun(PiecesWidget):
         while f * cur < temp:
             cur += f * self.diam
             tuples = eval(strings)
-            res = self.base.get(tuples, 0)
+            res = self.ptc.get(tuples, 0)
             if res != '':
                 if res != 0 and self.same != res.same:
                     self.can.add(tuples)
@@ -219,7 +219,7 @@ class Soldier(PiecesWidget):
         if f * cur < temp:
             cur += f * self.diam
             tuples = eval(strings)
-            res = self.base.get(tuples, 0)
+            res = self.ptc.get(tuples, 0)
             if res == '':
                 self.can.add(tuples)
             elif res != 0 and self.same != res.same:

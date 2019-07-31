@@ -18,7 +18,7 @@ class PiecesWidget(QWidget):
         self.center = length * 10, length * 9
         self.resize(self.diam, self.diam)
         if self.parent():
-            self.base = self.parent().base
+            self.ptc = self.parent().ptc
             self.can = self.parent().can
         self.case = {'x': (length * 9, '(cur, y)'), 'y': (length * 8, '(x, cur)')}
         self.chess = ChessPieces(self)
@@ -26,12 +26,13 @@ class PiecesWidget(QWidget):
         self.pre = False
 
     def check(self):
+        self.can.clear()
         x, y = self.pos()
         self.check_(x, y, f=1, k='x')
         self.check_(x, y, f=-1, k='x')
         self.check_(x, y, f=1, k='y')
         self.check_(x, y, f=-1, k='y')
-        print(x, y)
+        # print(x, y)
         pass
 
     def pos(self):
