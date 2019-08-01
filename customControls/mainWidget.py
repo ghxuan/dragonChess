@@ -1,9 +1,9 @@
-from PySide2.QtWidgets import QWidget, QPushButton
+from PySide2.QtWidgets import QWidget
 from PySide2.QtCore import Qt
-from PySide2.QtGui import QPaintEvent, QPainter, QPen
 
+from customControls.rootPieces import FWidget
 from customControls.boardWidget import BoardWidget
-from customControls.rootPieces import RootPieces, FWidget
+from customControls.piecesWidget import PiecesWidget
 from customControls.pieces import Car, Horse, Elephant, Bodyguard, General, Gun, Soldier
 
 
@@ -14,20 +14,21 @@ class MainWidget(QWidget):
             Qt.LeftButton: self.left_button,
             Qt.RightButton: self.right_button,
         }
+        self.foot = []
+        self.red, self.black = {}, {}
+        # ChessPieces to point, point to ChessPieces, widget to point, point to widget
+        self.ctp, self.ptc, self.wtp, self.ptw = {}, {}, {}, {}
         # 第几次点击
-        self.first = self.second = None
-        self.one = self.two = None
+        self.first = self.one = None
         self.length = 30
         self.diam = self.length * 2
         self.area = (self.length * 5 / 6) ** 2
         self.center = self.diam * 5
         self.setMouseTracking(True)
-        self.base_pieces = {2940: 'Car', 2880: 'Horse', 2820: 'Elephant', 2760: 'Bodyguard', 2700: 'General',
-                            1680: 'Gun', 900: 'Soldier', 1020: 'Soldier', 1140: 'Soldier'}
         self.board = BoardWidget(self, length=self.length)
         rad = str(self.length * 5 // 6)
-        print(rad)
-
+        self.base_pieces = {2940: Car, 2880: Horse, 2820: Elephant, 2760: Bodyguard, 2700: General,
+                            1680: Gun, 900: Soldier, 1020: Soldier, 1140: Soldier}
         # self.setStyleSheet("""
         #     ChessPieces{
         #         border-color: #6ec672;
@@ -68,10 +69,8 @@ class MainWidget(QWidget):
             (-30, -60), (150, 120), (150, -180), (-270, -60), (270, -180), (-210, 0), (-90, -180), (30, -180),
             (-30, 0), (-270, 60), (90, 120), (-30, 60), (-210, 240), (-210, -60), (-90, 0), (-270, -120), (270, -120)
         }
-        # ChessPieces to point, point to ChessPieces, widget to point, point to widget
-        self.ctp, self.ptc, self.wtp, self.ptw = {}, {}, {}, {}
         self.set_pieces()
-        self.copy = self.can.copy()
+        self.set_can()
 
     def set_pieces(self):
         self.can.clear()
@@ -83,14 +82,22 @@ class MainWidget(QWidget):
             if val not in self.base_pieces:
                 self.ptc[x, y] = ''
             else:
-                piece = eval(f'{self.base_pieces[val]}(self, pos=(x, y), length=self.length)')
+                piece = self.base_pieces[val](self, pos=(x, y), length=self.length)
                 if x < 0:
-                    self.can.add((x, y))
+                    self.red[piece] = (x, y)
                     piece.same = True
                 else:
+                    self.black[piece] = (x, y)
                     piece.same = False
                 self.ptc[x, y] = piece
                 self.ctp[piece] = (x, y)
+
+    def set_can(self):
+        if len(self.foot) % 2 == 0:
+            self.can = set(self.red.values())
+        else:
+            self.can = set(self.black.values())
+        self.copy = self.can.copy()
 
     def get_exist(self, x, y):
         x, y = int(x - self.center), int(y - self.center)
@@ -114,19 +121,42 @@ class MainWidget(QWidget):
         pass
 
     def left_button(self, event):
-        print('left', self.second)
+        # print('left', self.first)
         x, y = event.pos().toTuple()
         temp = self.get_exist(x, y)
-        if not (temp and temp in self.can):
+        if temp not in self.can:
             return
         x, y = temp
-        if not self.second:
+        if not self.first:
             self.first = self.ptc[x, y]
             self.first.check()
             self.one.animation.stop()
             self.one.opacity.setOpacity(1)
             self.first, self.one = self.one, None
-        pass
+        else:
+            self.first.opacity.setOpacity(0)
+            point = self.wtp[self.first]
+            cur = self.ptc.get((x, y), PiecesWidget())
+            temp = self.ptc.get(point, PiecesWidget())
+            self.foot.append((point, temp))
+            self.ptc[(x, y)], self.ctp[temp] = temp, (x, y)
+            self.ptc[point] = ''
+            temp.move(x, y)
+            if temp.same:
+                self.red[temp] = (x, y)
+                temp = self.black
+            else:
+                self.black[temp] = (x, y)
+                temp = self.red
+            if cur:
+                temp.pop(cur)
+                self.ctp.pop(cur)
+                cur.close()
+            self.one.animation.stop()
+            self.one.opacity.setOpacity(0)
+            self.first, self.one = None, None
+            self.set_can()
+            pass
 
     def mouseMoveEvent(self, event):
         x, y = event.pos().toTuple()
@@ -138,8 +168,12 @@ class MainWidget(QWidget):
                 self.one.opacity.setOpacity(0)
             return
         x, y = temp
-        self.one = self.ptw[x, y]
-        self.one.animation.start()
+        temp = self.ptw[x, y]
+        if temp != self.one:
+            self.one.animation.stop()
+            self.one.opacity.setOpacity(0)
+            self.one = temp
+            self.one.animation.start()
         pass
 
     def mousePressEvent(self, event):

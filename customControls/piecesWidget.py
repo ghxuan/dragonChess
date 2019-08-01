@@ -10,6 +10,7 @@ class PiecesWidget(QWidget):
         super(PiecesWidget, self).__init__(*args, **kwargs)
         self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowMinimizeButtonHint)
         self.setAttribute(Qt.WA_TranslucentBackground)
+        # self.setAttribute(Qt.WA_DeleteOnClose)
         self.setAttribute(Qt.WA_TransparentForMouseEvents, True)
         self.length = length
         self.radius = length * 5 / 6
@@ -17,22 +18,18 @@ class PiecesWidget(QWidget):
         self.diam = self.length * 2
         self.center = length * 10, length * 9
         self.resize(self.diam, self.diam)
-        if self.parent():
-            self.ptc = self.parent().ptc
-            self.can = self.parent().can
         self.case = {'x': (length * 9, '(cur, y)'), 'y': (length * 8, '(x, cur)')}
         self.chess = ChessPieces(self)
         self.setStyleSheet('')
         self.pre = False
 
     def check(self):
-        self.can.clear()
         x, y = self.pos()
+        self.parent().can.clear()
         self.check_(x, y, f=1, k='x')
         self.check_(x, y, f=-1, k='x')
         self.check_(x, y, f=1, k='y')
         self.check_(x, y, f=-1, k='y')
-        # print(x, y)
         pass
 
     def pos(self):

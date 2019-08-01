@@ -19,12 +19,12 @@ class Car(PiecesWidget):
         while f * cur < temp:
             cur += f * self.diam
             tuples = eval(strings)
-            res = self.ptc.get(tuples, 0)
+            res = self.parent().ptc.get(tuples, 0)
             if res == '':
-                self.can.add(tuples)
+                self.parent().can.add(tuples)
             else:
                 if res != 0 and self.same != res.same:
-                    self.can.add(tuples)
+                    self.parent().can.add(tuples)
                 break
 
 
@@ -49,16 +49,16 @@ class Horse(PiecesWidget):
         if f * cur < temp:
             cur += f * self.diam
             tuples = eval(strings)
-            res = self.ptc.get(tuples, 0)
+            res = self.parent().ptc.get(tuples, 0)
             if res == '':
                 cur += f * self.diam
                 lists = eval(string)
                 for l in lists:
-                    res = self.ptc.get(l, 0)
+                    res = self.parent().ptc.get(l, 0)
                     if res == '':
-                        self.can.add(l)
+                        self.parent().can.add(l)
                     elif res != 0 and self.same != res.same:
-                        self.can.add(l)
+                        self.parent().can.add(l)
 
 
 class Elephant(PiecesWidget):
@@ -91,15 +91,15 @@ class Elephant(PiecesWidget):
             tuples = eval(strings)
             if tuples[0] * self.forward < 0:
                 return
-            res = self.ptc.get(tuples, 0)
+            res = self.parent().ptc.get(tuples, 0)
             if res == '':
                 lists = eval(string)
                 for l in lists:
-                    res = self.ptc.get(l, 0)
+                    res = self.parent().ptc.get(l, 0)
                     if res == '':
-                        self.can.add(l)
+                        self.parent().can.add(l)
                     elif res != 0 and self.same != res.same:
-                        self.can.add(l)
+                        self.parent().can.add(l)
 
 
 class Bodyguard(PiecesWidget):
@@ -129,11 +129,11 @@ class Bodyguard(PiecesWidget):
             tuples = eval(strings)
             if abs(tuples[1]) > 60 or abs(tuples[0]) < 210:
                 return
-            res = self.ptc.get(tuples, 0)
+            res = self.parent().ptc.get(tuples, 0)
             if res == '':
-                self.can.add(tuples)
+                self.parent().can.add(tuples)
             elif res != 0 and self.same != res.same:
-                self.can.add(tuples)
+                self.parent().can.add(tuples)
 
 
 class General(PiecesWidget):
@@ -156,11 +156,11 @@ class General(PiecesWidget):
             tuples = eval(strings)
             if abs(tuples[1]) > 60 or abs(tuples[0]) < 210:
                 return
-            res = self.ptc.get(tuples, 0)
+            res = self.parent().ptc.get(tuples, 0)
             if res == '':
-                self.can.add(tuples)
+                self.parent().can.add(tuples)
             elif res != 0 and self.same != res.same:
-                self.can.add(tuples)
+                self.parent().can.add(tuples)
 
 
 class Gun(PiecesWidget):
@@ -180,18 +180,18 @@ class Gun(PiecesWidget):
         while f * cur < temp:
             cur += f * self.diam
             tuples = eval(strings)
-            res = self.ptc.get(tuples, 0)
+            res = self.parent().ptc.get(tuples, 0)
             if res == '':
-                self.can.add(tuples)
+                self.parent().can.add(tuples)
             else:
                 break
         while f * cur < temp:
             cur += f * self.diam
             tuples = eval(strings)
-            res = self.ptc.get(tuples, 0)
+            res = self.parent().ptc.get(tuples, 0)
             if res != '':
                 if res != 0 and self.same != res.same:
-                    self.can.add(tuples)
+                    self.parent().can.add(tuples)
                 break
 
 
@@ -219,8 +219,8 @@ class Soldier(PiecesWidget):
         if f * cur < temp:
             cur += f * self.diam
             tuples = eval(strings)
-            res = self.ptc.get(tuples, 0)
+            res = self.parent().ptc.get(tuples, 0)
             if res == '':
-                self.can.add(tuples)
+                self.parent().can.add(tuples)
             elif res != 0 and self.same != res.same:
-                self.can.add(tuples)
+                self.parent().can.add(tuples)

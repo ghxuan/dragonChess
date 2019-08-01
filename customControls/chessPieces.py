@@ -14,8 +14,6 @@ class ChessPieces(QPushButton):
         self.diam = self.radius * 2
         self.center = length * (10 + 1 / 6), length * (9 + 1 / 6)
         self.resize(self.diam, self.diam)
-        if self.parent():
-            self.ptc = self.parent().ptc
         self.move(self.length / 6, self.length / 6)
         mask = QRegion(-1, -1, self.diam + 1, self.diam + 1, QRegion.Ellipse)
         self.setMask(mask)
