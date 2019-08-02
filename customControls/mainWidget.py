@@ -3,7 +3,6 @@ from PySide2.QtCore import Qt
 
 from customControls.rootPieces import FWidget
 from customControls.boardWidget import BoardWidget
-from customControls.piecesWidget import PiecesWidget
 from customControls.pieces import Car, Horse, Elephant, Bodyguard, General, Gun, Soldier
 
 
@@ -110,6 +109,32 @@ class MainWidget(QWidget):
             if c ** 2 + t ** 2 <= self.area:
                 return x - self.length - c, y - t
 
+    def retreat(self):
+        point_b, before, point_a, after = self.foot.pop()
+        print(point_b, before, point_a, after)
+        before.move(*point_b)
+        self.ptc[point_b] = before
+        self.ctp[before] = point_b
+        if before.same:
+            self.red[before] = point_b
+            temp = self.black
+        else:
+            self.black[before] = point_b
+            temp = self.red
+        if after:
+            self.ptc[point_a] = after
+            self.ctp[after] = point_a
+            temp[after] = point_a
+        else:
+            self.ptc[point_a] = ''
+        for i in [self.first, self.one]:
+            if hasattr(i, 'animation'):
+                i.animation.stop()
+                i.opacity.setOpacity(0)
+        self.first = self.one = None
+        self.set_can()
+        pass
+
     def right_button(self, event):
         # print('right')
         # print([self.one, self.first, self.two, self.second])
@@ -136,9 +161,9 @@ class MainWidget(QWidget):
         else:
             self.first.opacity.setOpacity(0)
             point = self.wtp[self.first]
-            cur = self.ptc.get((x, y), PiecesWidget())
-            temp = self.ptc.get(point, PiecesWidget())
-            self.foot.append((point, temp))
+            cur = self.ptc.get((x, y), None)
+            temp = self.ptc.get(point, None)
+            self.foot.append((point, temp, (x, y), cur))
             self.ptc[(x, y)], self.ctp[temp] = temp, (x, y)
             self.ptc[point] = ''
             temp.move(x, y)
@@ -150,7 +175,7 @@ class MainWidget(QWidget):
                 temp = self.red
             if cur:
                 temp.pop(cur)
-                self.ctp.pop(cur)
+                self.ctp[cur] = ''
                 cur.close()
             self.one.animation.stop()
             self.one.opacity.setOpacity(0)
@@ -170,10 +195,11 @@ class MainWidget(QWidget):
         x, y = temp
         temp = self.ptw[x, y]
         if temp != self.one:
-            self.one.animation.stop()
-            self.one.opacity.setOpacity(0)
+            if hasattr(self.one, 'animation'):
+                self.one.animation.stop()
+                self.one.opacity.setOpacity(0)
             self.one = temp
-            self.one.animation.start()
+        self.one.animation.start()
         pass
 
     def mousePressEvent(self, event):

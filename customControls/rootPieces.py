@@ -96,5 +96,3 @@ class FWidget(QWidget):
         # # painter.setBrush(QColor(255, 160, 90))
         # painter.drawRect(QRect(0, 0, self.length * 2, self.length * 2))
         painter.end()
-
-    pass
