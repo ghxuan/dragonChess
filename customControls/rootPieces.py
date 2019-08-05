@@ -41,7 +41,7 @@ class RootPieces(QWidget):
 
 
 class FWidget(QWidget):
-    def __init__(self, *args, pos=(0, 0), length=30, **kwargs):
+    def __init__(self, *args, pos=(0, 0), shift=(0, 0), length=30, **kwargs):
         super(FWidget, self).__init__(*args, **kwargs)
         self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowMinimizeButtonHint)
         self.setAttribute(Qt.WA_TranslucentBackground)
@@ -52,7 +52,8 @@ class FWidget(QWidget):
         self.center = length * 10, length * 9
         self.opacity = QGraphicsOpacityEffect(self)
         x, y = pos
-        self.move(x, y)
+        a, b = shift
+        self.move(x + a, y + b)
         self.setGraphicsEffect(self.opacity)
         self.opacity.setOpacity(0)
         self.animation = QPropertyAnimation(self.opacity, b'opacity')

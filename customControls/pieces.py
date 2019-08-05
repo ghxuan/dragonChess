@@ -2,10 +2,11 @@ from customControls.piecesWidget import PiecesWidget
 
 
 class Car(PiecesWidget):
-    def __init__(self, *args, pos=(0, 0), length=30, **kwargs):
+    def __init__(self, *args, pos=(0, 0), shift=(0, 0), length=30, **kwargs):
         super(Car, self).__init__(*args, length=length, **kwargs)
         x, y = pos
-        self.move(x, y)
+        a, b = shift
+        self.move(x + a, y + b)
         if x < 0:
             self.chess.setText('车')
             self.setStyleSheet("color: #c6385a;")
@@ -29,10 +30,11 @@ class Car(PiecesWidget):
 
 
 class Horse(PiecesWidget):
-    def __init__(self, *args, pos=(0, 0), length=30, **kwargs):
+    def __init__(self, *args, pos=(0, 0), shift=(0, 0), length=30, **kwargs):
         super(Horse, self).__init__(*args, length=length, **kwargs)
         x, y = pos
-        self.move(x, y)
+        a, b = shift
+        self.move(x + a, y + b)
         self.case = {'x': (length * 9, '(cur, y)', '[(cur, y - self.diam), (cur, y + self.diam)]'),
                      'y': (length * 8, '(x, cur)', '[(x - self.diam, cur), (x + self.diam, cur)]')}
         if x < 0:
@@ -62,10 +64,11 @@ class Horse(PiecesWidget):
 
 
 class Elephant(PiecesWidget):
-    def __init__(self, *args, pos=(0, 0), length=30, **kwargs):
+    def __init__(self, *args, pos=(0, 0), shift=(0, 0), length=30, **kwargs):
         super(Elephant, self).__init__(*args, length=length, **kwargs)
         x, y = pos
-        self.move(x, y)
+        a, b = shift
+        self.move(x + a, y + b)
         self.case = {
             (1, 'x'): (length * 9, '(x + self.diam, y - self.diam)', '[(x + 2 * self.diam, y - 2 * self.diam)]'),
             (-1, 'x'): (length * 9, '(x - self.diam, y - self.diam)', '[(x - 2 * self.diam, y - 2 * self.diam)]'),
@@ -103,10 +106,11 @@ class Elephant(PiecesWidget):
 
 
 class Bodyguard(PiecesWidget):
-    def __init__(self, *args, pos=(0, 0), length=30, **kwargs):
+    def __init__(self, *args, pos=(0, 0), shift=(0, 0), length=30, **kwargs):
         super(Bodyguard, self).__init__(*args, length=length, **kwargs)
         x, y = pos
-        self.move(x, y)
+        a, b = shift
+        self.move(x + a, y + b)
         self.case = {
             (1, 'x'): (length * 9, '(x + self.diam, y - self.diam)'),
             (-1, 'x'): (length * 9, '(x - self.diam, y - self.diam)'),
@@ -137,10 +141,11 @@ class Bodyguard(PiecesWidget):
 
 
 class General(PiecesWidget):
-    def __init__(self, *args, pos=(0, 0), length=30, **kwargs):
+    def __init__(self, *args, pos=(0, 0), shift=(0, 0), length=30, **kwargs):
         super(General, self).__init__(*args, length=length, **kwargs)
         x, y = pos
-        self.move(x, y)
+        a, b = shift
+        self.move(x + a, y + b)
         if x < 0:
             self.chess.setText('帅')
             self.setStyleSheet("color: #c6385a;")
@@ -164,11 +169,12 @@ class General(PiecesWidget):
 
 
 class Gun(PiecesWidget):
-    def __init__(self, *args, pos=(0, 0), length=30, **kwargs):
+    def __init__(self, *args, pos=(0, 0), shift=(0, 0), length=30, **kwargs):
         super(Gun, self).__init__(*args, length=length, **kwargs)
         x, y = pos
+        a, b = shift
+        self.move(x + a, y + b)
         self.chess.setText('炮')
-        self.move(x, y)
         if x < 0:
             self.setStyleSheet("color: #c6385a;")
         else:
@@ -196,10 +202,11 @@ class Gun(PiecesWidget):
 
 
 class Soldier(PiecesWidget):
-    def __init__(self, *args, pos=(0, 0), length=30, **kwargs):
+    def __init__(self, *args, pos=(0, 0), shift=(0, 0), length=30, **kwargs):
         super(Soldier, self).__init__(*args, length=length, **kwargs)
         x, y = pos
-        self.move(x, y)
+        a, b = shift
+        self.move(x + a, y + b)
         if x < 0:
             self.forward = -1
             self.chess.setText('兵')

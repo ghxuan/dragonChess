@@ -19,12 +19,14 @@ class MainWidget(QWidget):
         self.ctp, self.ptc, self.wtp, self.ptw = {}, {}, {}, {}
         # 第几次点击
         self.first = self.one = None
+        self.shift = (0, 0)
         self.length = 30
         self.diam = self.length * 2
         self.area = (self.length * 5 / 6) ** 2
         self.center = self.diam * 5
         self.setMouseTracking(True)
         self.board = BoardWidget(self, length=self.length)
+        self.board.move(*self.shift)
         rad = str(self.length * 5 // 6)
         self.base_pieces = {2940: Car, 2880: Horse, 2820: Elephant, 2760: Bodyguard, 2700: General,
                             1680: Gun, 900: Soldier, 1020: Soldier, 1140: Soldier}
@@ -68,20 +70,23 @@ class MainWidget(QWidget):
             (-30, -60), (150, 120), (150, -180), (-270, -60), (270, -180), (-210, 0), (-90, -180), (30, -180),
             (-30, 0), (-270, 60), (90, 120), (-30, 60), (-210, 240), (-210, -60), (-90, 0), (-270, -120), (270, -120)
         }
+        self.gen = []
         self.set_pieces()
         self.set_can()
 
     def set_pieces(self):
         self.can.clear()
         for x, y in self.base:
-            press = FWidget(self, pos=(x, y), length=self.length)
+            press = FWidget(self, pos=(x, y), shift=self.shift, length=self.length)
             self.ptw[x, y] = press
             self.wtp[press] = (x, y)
             val = abs(x) * 10 + abs(y)
             if val not in self.base_pieces:
                 self.ptc[x, y] = ''
             else:
-                piece = self.base_pieces[val](self, pos=(x, y), length=self.length)
+                piece = self.base_pieces[val](self, pos=(x, y), shift=self.shift, length=self.length)
+                if val == 2700:
+                    self.gen.append(piece)
                 if x < 0:
                     self.red[piece] = (x, y)
                     piece.same = True
@@ -92,6 +97,8 @@ class MainWidget(QWidget):
                 self.ctp[piece] = (x, y)
 
     def set_can(self):
+        self.can.clear()
+        self.first, self.one = None, None
         if len(self.foot) % 2 == 0:
             self.can = set(self.red.values())
         else:
@@ -179,7 +186,6 @@ class MainWidget(QWidget):
                 cur.close()
             self.one.animation.stop()
             self.one.opacity.setOpacity(0)
-            self.first, self.one = None, None
             self.set_can()
             pass
 
